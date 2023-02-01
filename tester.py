@@ -89,6 +89,7 @@ index = '''
 <body>
     <form id="form" action="{{url_for('submit')}}" method="post">
         <input type="text" placeholder="Enter some data" name="input_param">
+        <input type="text" placeholder="Enter Inference steps numeric (more means more time)" name="inference">
         <button type="button" onclick="submitForm()">Submit</button>
     </form>
     <div id="spinner" style="display: none;">
@@ -128,11 +129,12 @@ def my_form():
 @app.route('/submit', methods=['POST'])
 def submit():
     input_param = request.form['input_param']
+    inference = request.form['inference']
     # Do some task with input_param here
     import time
     from torch import autocast
     with autocast("cuda"):
-      image =pipe(input_param, num_inference_steps=500).images[0]
+      image =pipe(input_param, num_inference_steps=inference).images[0]
     image.save(f"panda_surfer.png")
     return send_file('panda_surfer.png', mimetype='image/png')
 
