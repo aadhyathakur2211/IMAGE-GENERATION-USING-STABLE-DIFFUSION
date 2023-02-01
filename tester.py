@@ -48,11 +48,11 @@ pipe = pipe.to("cuda")
 #providing text prompt to generate images using stable diffusion, the generated images are in PIL format.
 prompt = """a leprachaun with a hat."""
 # Since we are using half-precision weights, We will use 'autocast' to run the inference faster 
-from torch import autocast
-with autocast("cuda"):
-   image =pipe(prompt).images[0]
-#display(image)
-image.save(f"panda_surfer.png")
+# from torch import autocast
+# with autocast("cuda"):
+#    image =pipe(prompt).images[0]
+# #display(image)
+# image.save(f"panda_surfer.png")
 
 
 # To have some deterministic output, I have set some random seed to the pipeline.
@@ -132,7 +132,7 @@ def submit():
     import time
     from torch import autocast
     with autocast("cuda"):
-      image =pipe(input_param).images[0]
+      image =pipe(input_param, num_inference_steps=500).images[0]
     image.save(f"panda_surfer.png")
     return send_file('panda_surfer.png', mimetype='image/png')
 
