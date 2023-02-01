@@ -129,7 +129,7 @@ def my_form():
 @app.route('/submit', methods=['POST'])
 def submit():
     input_param = request.form['input_param']
-    inference = request.form['inference']
+    inference = int(request.form['inference'])
     # Do some task with input_param here
     import time
     from torch import autocast
